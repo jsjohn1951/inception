@@ -1,0 +1,7 @@
+version: '2'
+services:
+  nginx:
+    build: ./requirements/nginx/
+    ports:
+      - 443:443
+    entrypoint: ["nginx", "-g", "daemon off;"]
