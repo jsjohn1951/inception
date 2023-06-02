@@ -1,18 +1,22 @@
+#? Base layer
 FROM debian:buster
 
+ENV DEBIAN_FRONTEND=noninteractive
+
+#? Layer 1
+#! installing updates
 RUN apt-get -y update --no-install-recommends
 
-RUN apt-get install -y \
-	--no-install-recommends \
-	wget \
-	zsh \
-	git \
-	nginx \
-	net-tools
+#? Layer 2
+#! installing nginx, procps, and systemctl
+RUN	apt-get install nginx -y --no-install-recommends
 
-RUN sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+# COPY ./conf/server.conf ./etc/nginx/conf.d
+# COPY ./conf/nginx.conf ./etc/nginx
 
-# * Nginx config location : /etc/nginx
+# * Check port : 				curl -vvv localhost:443
+# * Nginx config location : 	/etc/nginx
+# * Check nginx is running :	service nginx status
 
 #! build an image :
 #	docker build . -t nginx
