@@ -9,10 +9,21 @@ RUN apt-get -y update --no-install-recommends
 
 #? Layer 2
 #! installing nginx, procps, and systemctl
-RUN	apt-get install nginx -y --no-install-recommends
+RUN	apt-get install nginx openssl -y --no-install-recommends
 
-# COPY ./conf/server.conf ./etc/nginx/conf.d
-# COPY ./conf/nginx.conf ./etc/nginx
+# COPY --chown=www-data:www-data ./conf/server.conf ./etc/nginx/conf.d
+COPY --chown=www-data:www-data ./conf/index.html ./var/www/html/
+COPY --chown=www-data:www-data ./conf/nginx.conf ./etc/nginx/sites-available/
+
+RUN ln -s /etc/nginx/sites-available/*.conf	etc/nginx/sites-enabled/ \
+		&& openssl req -x509 \
+            -sha256 -days 356 \
+            -nodes \
+            -newkey rsa:2048 \
+            -subj "/CN=demo.mlopshub.com/C=US/L=San Fransisco" \
+            -keyout /etc/ssl/wil.42.fr.key -out /etc/ssl/wil.42.fr.crt
+
+
 
 # * Check port : 				curl -vvv localhost:443
 # * Nginx config location : 	/etc/nginx

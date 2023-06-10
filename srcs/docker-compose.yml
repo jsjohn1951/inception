@@ -4,7 +4,7 @@ services:
     build: ./requirements/nginx/
     container_name: nginx
     ports:
-      - 443:80
+      - '443:443'
     entrypoint: ["nginx", "-g", "daemon off;"]
   
   # wordpress:
