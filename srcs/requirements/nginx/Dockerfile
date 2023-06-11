@@ -23,8 +23,6 @@ RUN ln -s /etc/nginx/sites-available/*.conf	etc/nginx/sites-enabled/ \
             -subj "/CN=demo.mlopshub.com/C=US/L=San Fransisco" \
             -keyout /etc/ssl/wil.42.fr.key -out /etc/ssl/wil.42.fr.crt
 
-
-
 # * Check port : 				curl -vvv localhost:443
 # * Nginx config location : 	/etc/nginx
 # * Check nginx is running :	service nginx status
