@@ -14,11 +14,16 @@ RUN apt-get install \
 	php-mysqli \
 	mariadb-client \
 	ca-certificates \
+	\
+	systemd \
+	\
     -y --no-install-recommends
 
-RUN mkdir -p /var/run/php
+RUN mkdir -p /var/run/php \
+	&& mkdir -p /var/run/mysqld
 
 COPY tools/wp_install.sh ./
+COPY conf/wordpress.conf /etc/php/7.3/fpm/pool.d
 
 RUN chmod +x wp_install.sh && ./wp_install.sh
 

@@ -11,7 +11,6 @@ RUN apt-get -y update --no-install-recommends
 #! installing nginx, procps, and systemctl
 RUN	apt-get install nginx openssl -y --no-install-recommends
 
-COPY --chown=www-data:www-data ./conf/index.html ./var/www/html/
 COPY --chown=www-data:www-data ./conf/nginx.conf ./etc/nginx/sites-available/
 
 RUN ln -s /etc/nginx/sites-available/*.conf	etc/nginx/sites-enabled/ \

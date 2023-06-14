@@ -13,3 +13,9 @@ chown www-data:www-data /var/www/html/wil.42.fr
 #* download workpress
 cd /var/www/html/wil.42.fr
 wp core download --allow-root
+# wp core config --dbname='wordpress' \
+# 		--dbuser='wpuser' \
+# 		--dbpass='password' \
+# 		--dbhost='localhost' \
+# 		--dbprefix='wp_' \
+# 		--allow-root

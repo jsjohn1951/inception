@@ -4,28 +4,28 @@ volumes:
   wordpress:
 
 networks:
-  front:
-  back:
+  frontend:
+  backend:
 
 services:
   nginx:
+    volumes:
+      - wordpress:/var/www/html
     build: ./requirements/nginx/
     container_name: nginx
     ports:
       - '443:443'
     networks:
-      - front
-    volumes:
-      - wordpress:/var/www/html
+      - frontend
     entrypoint: ["nginx", "-g", "daemon off;"]
   
   wordpress:
+    volumes:
+      - wordpress:/var/www/html
     build: ./requirements/wordpress/
     container_name: wordpress
     expose:
       - 9000
     networks:
-      - front
-    volumes:
-      - wordpress:/var/www/html
+      - frontend
     entrypoint: ["/usr/sbin/php-fpm7.3", "-F", "-R"]
