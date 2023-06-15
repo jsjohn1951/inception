@@ -10,7 +10,7 @@ networks:
 services:
   nginx:
     volumes:
-      - wordpress:/var/www/html
+      - wordpress:/apphtml
     build: ./requirements/nginx/
     container_name: nginx
     ports:
@@ -21,7 +21,7 @@ services:
   
   wordpress:
     volumes:
-      - wordpress:/var/www/html
+      - wordpress:/apphtml
     build: ./requirements/wordpress/
     container_name: wordpress
     expose:

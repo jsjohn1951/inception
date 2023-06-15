@@ -6,12 +6,12 @@ chmod +x wp-cli.phar
 mv wp-cli.phar /usr/local/bin/wp
 
 #* make directories
-mkdir -p /var/www/html/wil.42.fr
-chown -R www-data:www-data /var/www/html/wil.42.fr
-chown www-data:www-data /var/www/html/wil.42.fr
+mkdir -p /apphtml
+chown -R www-data:www-data /apphtml
+chown www-data:www-data /apphtml
 
 #* download workpress
-cd /var/www/html/wil.42.fr
+cd /apphtml
 wp core download --allow-root
 # wp core config --dbname='wordpress' \
 # 		--dbuser='wpuser' \

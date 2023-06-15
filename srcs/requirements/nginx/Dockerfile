@@ -23,20 +23,3 @@ RUN ln -s /etc/nginx/sites-available/*.conf	etc/nginx/sites-enabled/ \
 
 # ! dialog - The default frontend for apt/apt-get under Debian/Ubuntu Linux.
 ENV DEBIAN_FRONTEND=dialog
-
-# * Check port : 				curl -vvv localhost:443
-# * Nginx config location : 	/etc/nginx
-# * Check nginx is running :	service nginx status
-
-#! build an image :
-#	docker build . -t nginx
-
-#! run in interactive mode
-# 	docker run -it nginx "/bin/bash"
-
-#! exec in another term window :
-# 	docker exec -it "$name" "/bin/bash"
-
-#! Docker remove container & image
-# 		docker rm "$name"
-#		docker rmi nginx
