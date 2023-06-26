@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM debian:bullseye
 
 # ! noninteractive - zero interaction while installing or upgrading with apt
 ENV DEBIAN_FRONTEND=noninteractive
@@ -9,7 +9,11 @@ ENV APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=DontWarn
 RUN apt-get -y update --no-install-recommends
 
 #! installing nginx, procps, and systemctl
-RUN	apt-get install nginx openssl -y --no-install-recommends
+RUN	apt-get install \
+	nginx \
+	dialog \
+	openssl \
+	-y --no-install-recommends
 
 COPY --chown=www-data:www-data ./conf/nginx.conf ./etc/nginx/sites-available/
 

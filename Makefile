@@ -6,7 +6,7 @@
 #    By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 16:23:56 by wismith           #+#    #+#              #
-#    Updated: 2023/06/15 17:46:00 by wismith          ###   ########.fr        #
+#    Updated: 2023/06/18 16:44:18 by wismith          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,9 +39,10 @@ rmi :
 	docker rmi all
 
 rmv :
-	docker volume rm srcs_wordpress
+	docker volume rm srcs_wordPress
+	docker volume rm srcs_DB
 
-re : down up
+re : fclean up
 
 .PHONY : all up down re
 

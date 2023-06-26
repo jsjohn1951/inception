@@ -1,21 +1,44 @@
 #! /bin/bash
 
-#* setup wordpress command line interface
-wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-chmod +x wp-cli.phar
-mv wp-cli.phar /usr/local/bin/wp
+# * setup wordpress command line interface
+chmod +x wp-cli-nightly.phar
+mv wp-cli-nightly.phar /usr/local/bin/wp
 
-#* make directories
+# * make directories
 mkdir -p /apphtml
 chown -R www-data:www-data /apphtml
 chown www-data:www-data /apphtml
 
-#* download workpress
+# * download workpress
+wp core download \
+	--version=6.2.2 \
+	--path=/apphtml \
+	--allow-root
+
 cd /apphtml
-wp core download --allow-root
-# wp core config --dbname='wordpress' \
-# 		--dbuser='wpuser' \
-# 		--dbpass='password' \
-# 		--dbhost='localhost' \
-# 		--dbprefix='wp_' \
-# 		--allow-root
+
+# * generates wp-config.php
+
+if ! wp core is-installed --allow-root; then
+
+	wp core config \
+		--dbname=$M_DB \
+		--dbuser=$M_USER \
+		--dbpass=$M_USER_PW \
+		--dbhost=$M_HOST \
+		--dbprefix='wp_' \
+		--allow-root
+
+	wp core install \
+		--url=$WP_URL \
+		--title=$WP_TITLE \
+		--admin_user=$WP_ADMIN_NAME \
+		--admin_password=$WP_ADMIN_PW \
+		--admin_email=$WP_ADMIN_EMAIL \
+		--allow-root
+
+fi
+
+cd ..
+
+./usr/sbin/php-fpm7.3 -F -R

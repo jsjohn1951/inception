@@ -1,31 +1,51 @@
 version: '3.9'
 
 volumes:
-  wordpress:
+  wordPress:
+  DB:
 
 networks:
-  frontend:
-  backend:
+  network:
+    driver: bridge
 
 services:
   nginx:
     volumes:
-      - wordpress:/apphtml
+      - wordPress:/apphtml
+    depends_on:
+      - wordpress
     build: ./requirements/nginx/
     container_name: nginx
     ports:
-      - '443:443'
+      - 443:443
     networks:
-      - frontend
+      - network
     entrypoint: ["nginx", "-g", "daemon off;"]
-  
-  wordpress:
+
+  mariadb:
+    env_file:
+      - .env
     volumes:
-      - wordpress:/apphtml
+      - DB:/var/lib/mysql
+    build: ./requirements/mariadb/
+    container_name: mariadb
+    expose:
+      - 3306
+    networks:
+      - network
+    entrypoint: ["./DBSetup.sh"]
+
+  wordpress:
+    env_file:
+      - .env
+    volumes:
+      - wordPress:/apphtml
+    depends_on:
+      - mariadb
     build: ./requirements/wordpress/
     container_name: wordpress
     expose:
       - 9000
     networks:
-      - frontend
-    entrypoint: ["/usr/sbin/php-fpm7.3", "-F", "-R"]
+      - network
+    entrypoint: ["./wp_install.sh"]
