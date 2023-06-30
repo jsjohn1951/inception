@@ -6,7 +6,7 @@
 #    By: wismith <wismith@42ABUDHABI.AE>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/30 16:23:56 by wismith           #+#    #+#              #
-#    Updated: 2023/06/18 16:44:18 by wismith          ###   ########.fr        #
+#    Updated: 2023/06/30 20:52:14 by wismith          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,18 +22,18 @@ all : $(NAME)
 
 $(NAME) : up
 
-clean :
-	@tput setaf 1
-	docker builder prune -f
-	@tput init
-
-fclean : down rmv clean
-
 up :
 	$(COMP) $(DIRFLAG) up -d --build
 
 down :
 	$(COMP) $(DIRFLAG) down --rmi all
+
+prune :
+	@tput setaf 1
+	docker builder prune -f
+	@tput init
+
+fclean : down rmv prune
 
 rmi :
 	docker rmi all
@@ -44,6 +44,6 @@ rmv :
 
 re : fclean up
 
-.PHONY : all up down re
+.PHONY : all up down prune fclean rmi rmv re
 
 	

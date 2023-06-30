@@ -10,21 +10,25 @@ networks:
 
 services:
   nginx:
+    env_file:
+      - .env
+    restart:
+      on-failure
     volumes:
       - wordPress:/apphtml
-    depends_on:
-      - wordpress
     build: ./requirements/nginx/
     container_name: nginx
     ports:
       - 443:443
     networks:
       - network
-    entrypoint: ["nginx", "-g", "daemon off;"]
+    entrypoint: ["./nginx_config.sh"]
 
   mariadb:
     env_file:
       - .env
+    restart:
+      on-failure
     volumes:
       - DB:/var/lib/mysql
     build: ./requirements/mariadb/
@@ -38,6 +42,8 @@ services:
   wordpress:
     env_file:
       - .env
+    restart:
+      on-failure
     volumes:
       - wordPress:/apphtml
     depends_on:

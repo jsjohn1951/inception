@@ -14,7 +14,6 @@ service mariadb stop
 
 mysqld_safe --defaults-extra-file=/etc/mysql/mariadb.conf.d/50-server.cnf
 
-
 # mariadb commands :
 # 	mariadb
 # 	show databases;

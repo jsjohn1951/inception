@@ -1,4 +1,4 @@
-FROM debian:bullseye
+FROM debian:bullseye-slim
 
 # ! noninteractive - zero interaction while installing or upgrading with apt
 ENV DEBIAN_FRONTEND=noninteractive
@@ -13,17 +13,14 @@ RUN	apt-get install \
 	nginx \
 	dialog \
 	openssl \
+	gettext-base \
 	-y --no-install-recommends
 
-COPY --chown=www-data:www-data ./conf/nginx.conf ./etc/nginx/sites-available/
+# COPY --chown=www-data:www-data ./conf/nginx.conf ./etc/nginx/sites-available/
+COPY ./conf/nginx.conf ./
+COPY tools/nginx_config.sh ./
 
-RUN ln -s /etc/nginx/sites-available/*.conf	etc/nginx/sites-enabled/ \
-		&& openssl req -x509 \
-            -sha256 -days 356 \
-            -nodes \
-            -newkey rsa:2048 \
-            -subj "/CN=demo.mlopshub.com/C=US/L=San Fransisco" \
-            -keyout /etc/ssl/wil.42.fr.key -out /etc/ssl/wil.42.fr.crt
+RUN chmod +x ./nginx_config.sh
 
 # ! dialog - The default frontend for apt/apt-get under Debian/Ubuntu Linux.
 ENV DEBIAN_FRONTEND=dialog
