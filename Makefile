@@ -23,6 +23,8 @@ all : $(NAME)
 $(NAME) : up
 
 up :
+	mkdir -p /home/wismith/data/wordpress
+	mkdir -p /home/wismith/data/db
 	$(COMP) $(DIRFLAG) up -d --build
 
 down :
@@ -39,8 +41,10 @@ rmi :
 	docker rmi all
 
 rmv :
-	docker volume rm srcs_wordPress
-	docker volume rm srcs_DB
+	docker volume rm -f srcs_wordPress
+	docker volume rm -f srcs_DB
+	rm -rf /home/wismith/data/wordpress
+	rm -rf /home/wismith/data/db
 
 re : fclean up
 
