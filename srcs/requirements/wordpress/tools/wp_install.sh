@@ -1,5 +1,8 @@
 #! /bin/bash
 
+# * move wordpress.conf into directory
+mv wordpress.conf ./etc/php/7.4/fpm/pool.d/
+
 # * setup wordpress command line interface
 chmod +x wp-cli-nightly.phar
 mv wp-cli-nightly.phar /usr/local/bin/wp
@@ -18,7 +21,6 @@ wp core download \
 cd /apphtml
 
 # * generates wp-config.php
-
 wp core config \
 	--dbname=$M_DB \
 	--dbuser=$M_USER \
@@ -44,18 +46,17 @@ if ! wp core is-installed --allow-root; then
 			--user_pass=$WP_USER_PW \
 			--role='editor' \
 			--allow-root
-	
+
 		wp theme install \
 			bizboost.1.0.1.zip \
 			--allow-root
-	
+
 		wp theme activate \
 			bizboost \
 			--allow-root
 	fi
 fi
 
-
 cd ..
 
-./usr/sbin/php-fpm7.3 -F -R
+php-fpm7.4 -F -R

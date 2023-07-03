@@ -48,7 +48,10 @@ services:
       - wordPress:/apphtml
     depends_on:
       - mariadb
-    build: ./requirements/wordpress/
+    build:
+      context: ./requirements/wordpress/
+      args:
+        - WP_ADMIN_NAME=${WP_ADMIN_NAME}
     container_name: wordpress
     expose:
       - 9000
